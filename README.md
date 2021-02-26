@@ -21,3 +21,6 @@
 - o método `doPost(HttpServletRequest, HttpServletResponse)` realiza requisições POST
 - o método `doGet(HttpServletRequest, HttpServletResponse)` realiza requisições GET
 - requisições POST e GET somente são seguras usando `https`
+
+**Módulo 03 - Definindo o nosso modelo**
+- o método `getParameter` da classe `javax.servlet.http.HttpServletRequest` somente aceita String como parâmetro
