@@ -24,3 +24,13 @@
 
 **Módulo 03 - Definindo o nosso modelo**
 - o método `getParameter` da classe `javax.servlet.http.HttpServletRequest` somente aceita String como parâmetro
+
+**Módulo 04 - Páginas dinâmicas com JSP**
+- JSP significa Java Server Pages
+- JSP é uma página automaticamente processada pelo Tomcat
+- Para gerar HTML dinamicamente no JSP usamos Scriptlets
+- Um scriptlet <% %> é um código Java dentro do HTML
+- Um scriptlet só funciona em uma página JSP
+- Usamos o RequestDispatcher para chamar um JSP a partir da servlet
+- Obtemos o RequestDispatcher a partir do HttpServletRequest
+- Usamos a requisição para colocar ou pegar um atributo (`setAttribute(.., ..)` ou `getAttribute(..)`)
