@@ -3,6 +3,7 @@ package br.com.alura.gerenciador.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,13 +22,11 @@ public class NovaEmpresaServlet extends HttpServlet {
 		
         Banco banco = new Banco();
         banco.adiciona(empresa);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("/novaEmpresaCriada.jsp");
+        request.setAttribute("empresa", empresa.getNome());
+        rd.forward(request, response);
 		
-		PrintWriter out = response.getWriter();
-		out.append("<html>");
-		out.append("<body>");
-		out.println("<html><body>Empresa " + nomeDaEmpresa + " cadastrada com sucesso!</body></html>");
-		out.append("</body>");
-		out.append("</html>");
 	}
 
 }
