@@ -8,7 +8,8 @@
 </head>
 <body>
 <form action="${linkServletNovaEmpresa}" method="post">
-	Nome: <input type="text" name="empresa" />
+	Nome: <input type="text" name="empresa" /> <br />
+	Data Abertura: <input type="text" name="dataAbertura" /> <br />
 	<input type="submit" />
 </form>
 </body>
