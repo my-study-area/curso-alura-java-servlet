@@ -51,3 +51,11 @@
 - JSTL e EL devem ser usados em conjunto
 - vimos várias tags do core como `c:if`, `c:forEach` e `c:url`
 - da fmt vimos a tag `fmt:formatDate`
+
+**Módulo 06 - Redirecionando o fluxo**
+- reenviar uma requisição com `request.getRequestDispatcher(String)`, por exemplo, ao encaminhar uma requisição de um servlet para outro pode permitir o usuário reenviar uma requisição POST na página de listagem de empresas
+- no método `getRequestDispatcher(String)` da classe `javax.servlet.http.HttpServletRequest` os dados da requisição podem ser encaminhado para outro servlet, não conseguimos ver na url o caminho redirecionado e ocorre no próprio servidor
+- no método `sendRedirect(String)` da `classe javax.servlet.http.HttpServletResponse` os dados da requisição não são encaminhados porque são tratados como uma nova solicitação pelo navegador, conseguimos ver na url o caminho redirecionado e ocorre no cliente
+- a diferença entre redirecionamento pelo cliente e servidor
+- para redirecionar pelo navegador usamos o método response.sendRedirect- ("endereço")
+- o código de resposta para redirecionamento HTTP é 30X (301 ou 302)
