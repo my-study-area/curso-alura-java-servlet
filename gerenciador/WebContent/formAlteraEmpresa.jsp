@@ -12,7 +12,7 @@
 <form action="${linkServletAlteraEmpresa}" method="post">
 	Nome: <input type="text" name="empresa" value="${empresa.nome}" /> <br />
 	Data Abertura: <input type="text" name="dataAbertura" value="<fmt:formatDate value="${empresa.dataAbertura}" pattern="dd/MM/yyyy"/>" /> <br />
-	<input type="text" name="id" value="${empresa.id}">
+	<input type="hidden" name="id" value="${empresa.id}">
 	<input type="submit" value="Editar"/>
 </form>
 </body>

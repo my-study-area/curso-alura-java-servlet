@@ -59,3 +59,9 @@
 - a diferença entre redirecionamento pelo cliente e servidor
 - para redirecionar pelo navegador usamos o método response.sendRedirect- ("endereço")
 - o código de resposta para redirecionamento HTTP é 30X (301 ou 302)
+
+
+**Módulo 07 - Completando o CRUD**
+- `CRUD`: Create, Read/Retrieve, Update, Delete
+- utilize a tag input do tipo hidden para informa o id num formulário (
+`<input type="hidden" name="id" value="${empresa.id}">`)
