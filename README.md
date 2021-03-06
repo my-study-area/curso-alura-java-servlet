@@ -65,3 +65,66 @@
 - `CRUD`: Create, Read/Retrieve, Update, Delete
 - utilize a tag input do tipo hidden para informa o id num formulário (
 `<input type="hidden" name="id" value="${empresa.id}">`)
+
+**Módulo 08 - Deploy da aplicação**
+- o arquivo `/gerenciador/WebContent/WEB-INF/web.xml` é o arquivo responsável por manter as configurações relacionadas aos Servlets
+- na tag `<welcome-file-list>` definimos os arquivo que será carregado automaticamente ao iniciar a aplicacão. Ex:
+  ```xml
+  <?xml version="1.0" encoding="UTF-8"?>
+  <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+    <display-name>gerenciador</display-name>
+    <welcome-file-list>
+      <welcome-file>bem-vindo.html</welcome-file>
+    </welcome-file-list>
+  </web-app>
+  ```
+
+- podemos usar o arquivo `web.xml` para mapear uma URL num Servlet. Ex:
+  ```xml
+  <?xml version="1.0" encoding="UTF-8"?>
+  <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+    <display-name>gerenciador</display-name>
+    <servlet>
+      <servlet-name>OiMundoServlet</servlet-name>
+      <servlet-class>br.com.alura.gerenciador.servlet.OiMundoServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+      <servlet-name>OiMundoServlet</servlet-name>
+      <url-pattern>/ola</url-pattern>
+    </servlet-mapping>
+  </web-app>
+  ```
+- Servlet é um objeto, gerenciado por um container como o Apache Tomcat,  que pode ser chamado pelo protocolo HTTP, através de um requisião
+- Apache Tomcat cria a instância do Servlet e é conhecido como um middleware, por ficar no intermédio entre o navegador e o Servlet
+- No Tomcat teremos apenas um Servlet, `OiMundoServlet` ou `ListaEmpresaServlet`, e isso se eles forem chamados. Por isso o Servlet é chamado de Singleton, um escopo, que sobrevive no projeto por tempo indeterminado enquanto o Tomcat estiver no ar, sem nunca recriá-lo. Por isso é conhecido como `preguiçoso`
+-  Inversão de controle, em inglês IOC (-Inversion Of Control). Isso significa que o método main() é quem instancia o objeto, mas no caso do nosso projeto quem realiza esse processo é o Tomcat
+- O Tomcat só irá instanciar as servlets de acordo com a necessidade, além disso, ele instanciará apenas uma servlet de cada (singleton)
+- A anotação @WebServlet possui o atributo loadOnStartup, que com valor 1 muda o comportamento "preguiçoso" do Tomcat e inicia o Servlet ao iniciar. Ex: `@WebServlet(urlPatterns="/oi", loadOnStartup=1)`
+- Procedimento para deploy:
+  - gerar o arquivo war no eclipse:
+    - botão direito do mouse no projeto > Export > WAR file > selecione a pasta de destino > Finish
+  - no tomcat de produção:
+    - copie o seu WAR na pasta `webapps` dentro do diretório do Tomcat
+  - inicie o servidor:
+    ```bash
+    # entre no diretório bin dentro do tomcat
+    cd bin
+    
+    # inicie o servidor
+    sudo ./startup.sh
+
+    # caso necessário, pare o servidor
+    sudo ./shutdown.sh
+    ```
+  - consultar o log:
+    ```bash
+    # na raiz do diretório do Tomcat
+    tail -f logs/catalina.out
+    ```
+- Para alterar a porta padrão do Tomcat altere, no arquivo `conf/server.xml`, a porta de 8080  para 80. Ex:
+  ```xml
+      <Connector port="80" protocol="HTTP/1.1"
+                connectionTimeout="20000"
+                redirectPort="8443" />
+  ```
