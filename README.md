@@ -11,6 +11,7 @@
     </a>
 </p>
 Curso de Java Servlet: Fundamentos da programação web Java
+
 ## Anotações
 
 **Módulo 01 - Fundamentos da Web e a API de Servlets**
@@ -27,7 +28,7 @@ Curso de Java Servlet: Fundamentos da programação web Java
 
 **Módulo 02 - Trabalhando com POST e GET**
 - para criarmos um servlet estendemos nossa classe à classe `javax.servlet.http.HttpServlet`, anotamos com `@WebServlet("/novaEmpresa")`, por exemplo e sobrescremos algum dos métodos
-- utilizamos a sobrescrita no método `doPost(HttpServletRequest, HttpServletResponse)` para realizarmos requisições `POST` e `GET`
+- utilizamos a sobrescrita no método `service(HttpServletRequest, HttpServletResponse)` para realizarmos requisições `POST` e `GET`
 - `javax.servlet.http.HttpServletResponse.getParameter(String)` é usado para receber parâmetro os formulários HTML
 - o método `doPost(HttpServletRequest, HttpServletResponse)` realiza requisições POST
 - o método `doGet(HttpServletRequest, HttpServletResponse)` realiza requisições GET
@@ -40,7 +41,7 @@ Curso de Java Servlet: Fundamentos da programação web Java
 - JSP significa Java Server Pages
 - JSP é uma página automaticamente processada pelo Tomcat
 - Para gerar HTML dinamicamente no JSP usamos Scriptlets
-- Um scriptlet <% %> é um código Java dentro do HTML
+- Um scriptlet `<% %>` é um código Java dentro do HTML
 - Um scriptlet só funciona em uma página JSP
 - Usamos o RequestDispatcher para chamar um JSP a partir da servlet
 - Obtemos o RequestDispatcher a partir do HttpServletRequest
@@ -65,21 +66,21 @@ Curso de Java Servlet: Fundamentos da programação web Java
 
 **Módulo 06 - Redirecionando o fluxo**
 - reenviar uma requisição com `request.getRequestDispatcher(String)`, por exemplo, ao encaminhar uma requisição de um servlet para outro pode permitir o usuário reenviar uma requisição POST na página de listagem de empresas
-- no método `getRequestDispatcher(String)` da classe `javax.servlet.http.HttpServletRequest` os dados da requisição podem ser encaminhado para outro servlet, não conseguimos ver na url o caminho redirecionado e ocorre no próprio servidor
-- no método `sendRedirect(String)` da `classe javax.servlet.http.HttpServletResponse` os dados da requisição não são encaminhados porque são tratados como uma nova solicitação pelo navegador, conseguimos ver na url o caminho redirecionado e ocorre no cliente
+- no método `getRequestDispatcher(String)`, da classe `javax.servlet.http.HttpServletRequest`, os dados da requisição podem ser encaminhado para outro servlet, mas não conseguimos ver na url o caminho redirecionado e ocorre no próprio servidor
+- no método `sendRedirect(String)`, da `classe javax.servlet.http.HttpServletResponse`, os dados da requisição não são encaminhados porque são tratados como uma nova solicitação pelo navegador. Conseguimos ver na url o caminho redirecionado e ocorre no cliente
 - a diferença entre redirecionamento pelo cliente e servidor
-- para redirecionar pelo navegador usamos o método response.sendRedirect- ("endereço")
+- para redirecionar pelo navegador usamos o método `response.sendRedirect("endereço")`
 - o código de resposta para redirecionamento HTTP é 30X (301 ou 302)
 
 
 **Módulo 07 - Completando o CRUD**
 - `CRUD`: Create, Read/Retrieve, Update, Delete
-- utilize a tag input do tipo hidden para informa o id num formulário (
+- utilize a tag input do tipo hidden para informar o id num formulário (
 `<input type="hidden" name="id" value="${empresa.id}">`)
 
 **Módulo 08 - Deploy da aplicação**
 - o arquivo `/gerenciador/WebContent/WEB-INF/web.xml` é o arquivo responsável por manter as configurações relacionadas aos Servlets
-- na tag `<welcome-file-list>` definimos os arquivo que será carregado automaticamente ao iniciar a aplicacão. Ex:
+- na tag `<welcome-file-list>` definimos o arquivo que será carregado automaticamente ao iniciar a aplicacão. Ex:
   ```xml
   <?xml version="1.0" encoding="UTF-8"?>
   <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
