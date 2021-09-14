@@ -56,8 +56,45 @@ public class OiMundoServlet extends HttpServlet {
 **Módulo 02 - Trabalhando com POST e GET**
 - para criarmos um servlet estendemos nossa classe à classe `javax.servlet.http.HttpServlet`, anotamos com `@WebServlet("/novaEmpresa")`, por exemplo e sobrescremos algum dos métodos
 - utilizamos a sobrescrita no método `service(HttpServletRequest, HttpServletResponse)` para realizarmos requisições `POST` e `GET`
-- `javax.servlet.http.HttpServletResponse.getParameter(String)` é usado para receber parâmetro os formulários HTML
-- o método `doPost(HttpServletRequest, HttpServletResponse)` realiza requisições POST
+- o método `javax.servlet.http.HttpServletResponse.getParameter(String)` é usado para receber os parâmetro via URL. Por exemplo, receber o valor do parâmetro nomeEmpresa da url `http://localhost:8080/gerenciador/novaEmpresa?nomeEmpresa=Caelum`. Exemplo:
+```java
+@WebServlet(urlPatterns = "/novaEmpresa")
+public class NomeEmpresaServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+
+	protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		System.out.println("Cadastrando nova empresa");
+		
+		String nomeEmpresa = req.getParameter("nomeEmpresa");
+		
+		PrintWriter out = res.getWriter();
+		out.println("<html><body>Empresa " + nomeEmpresa + " cadastrada com sucesso!</body></html>");
+	}
+
+}
+```
+- o método `doPost(HttpServletRequest, HttpServletResponse)` realiza requisições POST. Exemplo:
+
+Método POST:
+```java
+protected void doPost(HttpServletRequest req, HttpServletResponse res) 
+    throws ServletException, IOException {
+  System.out.println("Cadastrando nova empresa");
+  
+  String nomeEmpresa = req.getParameter("nomeEmpresa");
+  
+  PrintWriter out = res.getWriter();
+  out.println("<html><body>Empresa " + nomeEmpresa + " cadastrada com sucesso!</body></html>");
+}
+```
+Formulário HTML:
+```html
+<form action="/gerenciador/novaEmpresa" method="post">
+  Nome da empresa: <input type="text" name="nomeEmpresa" />
+  <input type="submit" value="Enviar" />
+</form>
+```
 - o método `doGet(HttpServletRequest, HttpServletResponse)` realiza requisições GET
 - requisições POST e GET somente são seguras usando `https`
 
