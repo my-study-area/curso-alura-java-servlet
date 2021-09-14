@@ -22,9 +22,36 @@ Curso de Java Servlet: Fundamentos da programação web Java
 - Tomcat entende o protocolo HTTP e roda por padrão no http://localhost:8080
 - O projeto Java faz parte da URL, no nosso caso: http://localhost:8080/gerenciador
 - Uma aplicação web Java pode ter páginas HTML
+- `Servlet` é uma especificação Java para trabalhar com as requisições HTTP
 - Uma servlet é um objeto Java que podemos chamar a partir de uma requisição HTTP
-- Para mapear a URL para uma servlet usamos a anotação @WebServlet
-- Uma servlet deve estender a classe HttpServlet e sobrescrever um determinado método (por exemplo service)
+- Para acessarmos um arquivo HTML criado em `WebContent/bem-vindo.html` num projeto chamado `gerenciado` devemos utilizar a seguinte url: `http://localhost:8080/<NOMDE-DO-PROJETO>/bem-vindo.html`. Exemplo: `http://localhost:8080/gerenciador/bem-vindo.html`.
+- Para criarmos um Servlet devemos:
+    - estender da classe `javax.servlet.http.HttpServlet`
+    - mapear uma URL para uma servlet usando a anotação `@WebServlet` ou através de um arquivo xml. 
+
+Exemplo utilizando anotação: `@WebServlet(urlPatterns = "/oi")`:
+```java
+@WebServlet(urlPatterns = "/oi")
+public class OiMundoServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		PrintWriter out =  res.getWriter();
+		out.println("<html>");
+		out.println("<body>");
+		out.println("Oi Mundo, você escreveu o seu primeiro servlet");
+		out.println("</body>");
+		out.println("</html>");
+	}
+
+}
+```
+
+- O método **service** nos dá uma instância de `HttpServletRequest` e `HttpServletResponse` para que possamos lidar com a requisição.
+
+- Uma servlet deve estender a classe HttpServlet e sobrescrever um determinado método (por exemplo service).
 
 **Módulo 02 - Trabalhando com POST e GET**
 - para criarmos um servlet estendemos nossa classe à classe `javax.servlet.http.HttpServlet`, anotamos com `@WebServlet("/novaEmpresa")`, por exemplo e sobrescremos algum dos métodos
