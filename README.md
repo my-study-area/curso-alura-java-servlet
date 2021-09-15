@@ -100,10 +100,12 @@ Formulário HTML:
 
 **Módulo 03 - Definindo o nosso modelo**
 - o método `getParameter` da classe `javax.servlet.http.HttpServletRequest` somente aceita String como parâmetro
+- utilizamos o método HTTP `GET` para acessar dados e `POST` para alterar/cadastrar dados
 
 **Módulo 04 - Páginas dinâmicas com JSP**
 - JSP significa Java Server Pages
 - JSP é uma página automaticamente processada pelo Tomcat
+- JSP é uma tecnologia que renderiza as páginas no servidor antes de enviá-la
 - Para gerar HTML dinamicamente no JSP usamos Scriptlets
 - Um scriptlet `<% %>` é um código Java dentro do HTML
 - Um scriptlet só funciona em uma página JSP
