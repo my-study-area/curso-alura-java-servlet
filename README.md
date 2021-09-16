@@ -109,9 +109,42 @@ Formulário HTML:
 - Para gerar HTML dinamicamente no JSP usamos Scriptlets
 - Um scriptlet `<% %>` é um código Java dentro do HTML
 - Um scriptlet só funciona em uma página JSP
-- Usamos o RequestDispatcher para chamar um JSP a partir da servlet
-- Obtemos o RequestDispatcher a partir do HttpServletRequest
-- Usamos a requisição para colocar ou pegar um atributo (`setAttribute(.., ..)` ou `getAttribute(..)`)
+- Podemos renderizar uma variável de duas formas:
+```jsp
+<% out.println(nomeEmpresa); %>
+```
+```jsp
+<%= nomeEmpresa %>
+```
+- Usamos o `RequestDispatcher` para chamar um JSP a partir da servlet
+- Obtemos o `RequestDispatcher` a partir do método `getRequestDispatcher()` de `HttpServletRequest`
+- Usamos a requisição (HttpServletRequest) para colocar ou pegar um atributo (`setAttribute(.., ..)` ou `getAttribute(..)`)
+- Utilizamos o método `setAttribute` de `HttpServletRequest` para criarmos atributos para dispacharmos na página jsp. Ex:
+```java
+@Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  List<Empresa> empresas = Banco.getEmpresas();
+  
+  request.setAttribute("empresas", empresas);
+  RequestDispatcher requestDispatcher = request.getRequestDispatcher("/listaEmpresas.jsp");
+  requestDispatcher.forward(request, response);
+}
+```
+- Na página jsp utilizamos o método `getAttribute` de `HttpServletRequest` para recuperar um atributo. Ex:
+```jsp
+<%
+  List<Empresa> empresas = (List<Empresa>) request.getAttribute("empresas");
+%>
+```
+
+- Para realizar import no jsp utilizamos o seguinte código:
+```jsp
+// para uma classe
+<%@page import="br.com.alura.gerenciador.servlet.Empresa"%>
+
+// para mais de uma
+<%@ page import="java.util.List, br.com.alura.gerenciador.servlet.Empresa"%>
+```
 
 **Módulo 05 - JSTL e Expression Language**
 - Expression Language (EL) é uma linguagem simples e limitada para imprimir o resultado de uma expressão
