@@ -149,16 +149,117 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 **Módulo 05 - JSTL e Expression Language**
 - Expression Language (EL) é uma linguagem simples e limitada para imprimir o resultado de uma expressão
 - EL usa a sintaxe de `${ .. }`
-- JSTL é a biblioteca padrão de tags
-- JSTL não vem com Tomcat e precisamos copiar um JAR
-- JARs ficam na pasta WEB-INF/lib do projeto
-- JSTL define 4 taglibs, as mais importantes são `core` e `fmt`
-- a taglib `core` serve para controle de fluxo, `fmt` para formatação
-- é preciso importar as taglib, core e fmt separadamente:
+- Quando usamo EL não precisamos recuperar os atributos na página jsp. Ex:
+```jsp
+<%
+// código comentado
+//    String nomeEmpresa = (String)request.getAttribute("nomeEmpresa");
+//    System.out.println(nomeEmpresa);
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Form nova empresa</title>
+</head>
+<body>
+Empresa ${ nomeEmpresa } cadastrada com sucesso!
+</body>
+</html>
+```
+- EL não realiza laços de repstição
+- `Java Standard Tag Library` (JSTL) é a biblioteca padrão de tags
+- JSTL não vem com Tomcat e precisamos copiar um JAR, por exemplo, `jstl-1.2.jar`
+- O JAR do JSTL deve ficar na pasta `WebContent > WEB-INF > lib` do projeto
+- Para importar o JSTL no arquivo jsp devemos adicionar a seguinte linha, por exemplo, para utilizar o `forEach`:
+```jsp
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+```
+
+Exemplo de forEach:
+```jsp
+<ul>
+  <c:forEach items="${empresas}" var="empresa">
+    <li>${empresa.nome}</li>
+  </c:forEach>
+</ul>
+```
+
+- JSTL define 4 taglibs (core, fmt, sql, xml), mas as mais importantes são `core` e `fmt`
+- A taglib `core` serve para controle de fluxo e `fmt` para formatação
+- É preciso importar as taglib, core e fmt separadamente:
 ```xml
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 ```
+- Para armazenar o valor do contexto da aplicação, gerenciador no nosso caso, podemos utilizar a tag `<c:url value="/novaEmpresa" var="linkServletNovaEmpresa"/>` da taglib. Exemplo:
+```jsp
+<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:url value="/novaEmpresa" var="linkServletNovaEmpresa"/>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lista Empresas</title>
+</head>
+<body>
+	<form action="${linkServletNovaEmpresa}" method="post">
+		Nome da empresa: <input type="text" name="nomeEmpresa" />
+		<input type="submit" value="Enviar" />
+	</form>	
+</body>
+</html>
+```
+
+- Através da JSTL podemos utilizar a condicional `if` da seguinte maneira:
+```jsp
+<c:if test="${ not empty nomeEmpresa  }">
+	Empresa ${ nomeEmpresa } cadastrada com sucesso!
+</c:if>
+```
+
+- Para trabalhar com formatação utilizamos o import `<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>`. Exemplo de listagem com fmt:
+```jsp
+<!DOCTYPE html>
+<%@page import="br.com.alura.gerenciador.servlet.Empresa"%>
+<%@page import="java.util.List"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lista Empresas</title>
+</head>
+<body>
+	<h1>Lista de empresas</h1>
+	
+	<ul>
+	<c:forEach items="${empresas}" var="empresa">
+		<li>${empresa.nome} - <fmt:formatDate value="${empresa.dataAbertura}" pattern="dd/MM/yyyy"/></li>
+	</c:forEach>
+	
+	</ul>
+</body>
+</html>
+```
+- Exemplo de conversão de data no Servlet:
+```java
+String paramDataEmpresa = request.getParameter("data");
+
+Date dataAbertura = null;
+try {
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    dataAbertura = sdf.parse(paramDataEmpresa);
+} catch (ParseException e) {
+    throw new ServletException(e);
+}
+
+Empresa empresa = new Empresa();
+empresa.setDataAbertura(dataAbertura);
+```
+
 - JSTL e EL devem ser usados em conjunto
 - vimos várias tags do core como `c:if`, `c:forEach` e `c:url`
 - da fmt vimos a tag `fmt:formatDate`
